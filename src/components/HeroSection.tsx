@@ -43,7 +43,7 @@ const HeroSection: React.FC = () => {
                 Tesfamichael Abebe
               </h1>
               <h3 className="text-xl md:text-2xl font-medium text-gray-300 mb-6">
-                <span className="text-white">Full-Stack Developer</span> & GDG Mentor
+                <span className="text-white">Full-Stack Developer</span>
               </h3>
               <p className="text-gray-400 mb-8 max-w-lg">
                 Based in Addis Ababa, Ethiopia
