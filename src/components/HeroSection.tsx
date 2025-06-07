@@ -102,7 +102,7 @@ const HeroSection: React.FC = () => {
               >
                 <div className="absolute inset-0 bg-gradient-to-tr from-purple-600/20 to-cyan-400/20 z-10 mix-blend-overlay"></div>
                 <img 
-                  src="/src/assets/profile.png" 
+                  src="/profile.png" 
                   alt="Tesfamichael Abebe"
                   className="w-full h-full object-cover"
                 />
