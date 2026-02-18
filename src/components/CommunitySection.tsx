@@ -1,4 +1,3 @@
-import React from 'react';
 import { Users } from 'lucide-react';
 import { useInView } from '../hooks/useInView';
 
@@ -11,7 +10,7 @@ const CommunitySection: React.FC = () => {
       ref={ref}
       className="py-24 relative overflow-hidden"
     >
-      <div className="absolute inset-0 bg-gradient-to-b from-black/90 via-black to-black/90 z-0"></div>
+      <div className="absolute inset-0 bg-gradient-to-b from-surface/90 via-surface to-surface/90 z-0"></div>
       
       <div
         className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 transition-all duration-1000 ${
@@ -28,7 +27,7 @@ const CommunitySection: React.FC = () => {
         </div>
 
         <div className="max-w-3xl mx-auto">
-          <div className="bg-black/40 backdrop-blur-md border border-gray-800 rounded-xl p-8 relative overflow-hidden group hover:border-purple-500/30 transition-all duration-500">
+          <div className="bg-surface/40 backdrop-blur-md border border-line rounded-xl p-8 relative overflow-hidden group hover:border-purple-500/30 transition-all duration-500">
             {/* Background glow effects */}
             <div className="absolute -right-24 -bottom-24 w-64 h-64 bg-purple-500/10 rounded-full filter blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
             <div className="absolute -left-24 -top-24 w-64 h-64 bg-cyan-500/10 rounded-full filter blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
@@ -39,9 +38,9 @@ const CommunitySection: React.FC = () => {
               </div>
               
               <div className="text-center sm:text-left">
-                <h3 className="text-2xl font-bold text-white mb-2">GDG AAU Mentor</h3>
-                <p className="text-gray-300 mb-4">1 year mentoring experience</p>
-                <p className="text-gray-400">
+                <h3 className="text-2xl font-bold text-foreground mb-2">GDG AAU Mentor</h3>
+                <p className="text-foreground-sub mb-4">1 year mentoring experience</p>
+                <p className="text-foreground-muted">
                   Passionate about sharing knowledge and helping others grow in their development journey.
                   As a GDG mentor at Addis Ababa University, I guide students on web development
                   fundamentals and modern frameworks.

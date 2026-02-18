@@ -22,21 +22,15 @@ export const trackEvent = (eventName: string, props?: Record<string, string | nu
     return;
   }
 
-  // Check if Plausible is loaded
+  // Track with Plausible if loaded
   if (window.plausible) {
     window.plausible(eventName, { props });
-  } else {
-    // Fallback to CountAPI if Plausible isn't available
-    fetch(`https://api.countapi.xyz/hit/tesfamichael-portfolio/${eventName.replace(/\s+/g, '-')}`)
-      .then(response => response.json())
-      .then(data => console.log(`${eventName} count:`, data.value))
-      .catch(error => console.error(`${eventName} tracking error:`, error));
   }
 };
 
 // Add global type for Plausible
 declare global {
   interface Window {
-    plausible?: (eventName: string, options?: { callback?: () => void; props?: Record<string, any> }) => void;
+    plausible?: (eventName: string, options?: { callback?: () => void; props?: Record<string, string | number | boolean> }) => void;
   }
 }

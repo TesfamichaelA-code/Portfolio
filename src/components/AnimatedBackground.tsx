@@ -1,4 +1,5 @@
-import React, { useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
+import { useTheme } from '../context/ThemeContext';
 
 interface Particle {
   x: number;
@@ -13,6 +14,7 @@ const AnimatedBackground: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const particles = useRef<Particle[]>([]);
   const animationFrameId = useRef<number | null>(null);
+  const { theme } = useTheme();
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -20,6 +22,8 @@ const AnimatedBackground: React.FC = () => {
 
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
+
+    const isDark = theme === 'dark';
 
     const resizeCanvas = () => {
       canvas.width = window.innerWidth;
@@ -31,7 +35,9 @@ const AnimatedBackground: React.FC = () => {
       particles.current = [];
       const particleCount = Math.min(Math.floor(window.innerWidth / 10), 100);
       
-      const colors = ['#0ff', '#f0f', '#00f', '#0ff4'];
+      const darkColors = ['#0ff', '#f0f', '#00f', '#0ff4'];
+      const lightColors = ['#0891b2', '#7c3aed', '#2563eb', '#0891b280'];
+      const colors = isDark ? darkColors : lightColors;
       
       for (let i = 0; i < particleCount; i++) {
         particles.current.push({
@@ -67,6 +73,10 @@ const AnimatedBackground: React.FC = () => {
       });
       
       // Connect particles that are close to each other
+      const lineColor = isDark
+        ? (d: number) => `rgba(0, 255, 255, ${0.2 - d / 500})`
+        : (d: number) => `rgba(8, 145, 178, ${0.15 - d / 700})`;
+
       for (let i = 0; i < particles.current.length; i++) {
         for (let j = i + 1; j < particles.current.length; j++) {
           const dx = particles.current[i].x - particles.current[j].x;
@@ -75,7 +85,7 @@ const AnimatedBackground: React.FC = () => {
           
           if (distance < 100) {
             ctx.beginPath();
-            ctx.strokeStyle = `rgba(0, 255, 255, ${0.2 - distance / 500})`;
+            ctx.strokeStyle = lineColor(distance);
             ctx.lineWidth = 0.5;
             ctx.moveTo(particles.current[i].x, particles.current[i].y);
             ctx.lineTo(particles.current[j].x, particles.current[j].y);
@@ -97,12 +107,12 @@ const AnimatedBackground: React.FC = () => {
         cancelAnimationFrame(animationFrameId.current);
       }
     };
-  }, []);
+  }, [theme]);
 
   return (
     <canvas 
       ref={canvasRef} 
-      className="fixed top-0 left-0 w-full h-full -z-10 opacity-30"
+      className={`fixed top-0 left-0 w-full h-full -z-10 ${theme === 'dark' ? 'opacity-30' : 'opacity-20'}`}
     />
   );
 };

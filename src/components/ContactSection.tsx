@@ -1,6 +1,7 @@
-import React, { useState, useRef } from 'react';
-import { Send, Mail, User, MessageSquare, CheckCircle, AlertCircle } from 'lucide-react';
+import { useState } from 'react';
+import { Send, Mail, User, MessageSquare, CheckCircle } from 'lucide-react';
 import { useInView } from '../hooks/useInView';
+import { useTheme } from '../context/ThemeContext';
 import emailjs from '@emailjs/browser';
 import toast, { Toaster } from 'react-hot-toast';
 import { trackEvent } from '../utils/analytics';
@@ -13,13 +14,13 @@ interface FormData {
 
 const ContactSection: React.FC = () => {
   const [ref, isVisible] = useInView({ threshold: 0.1 });
+  const { theme } = useTheme();
   const [formData, setFormData] = useState<FormData>({
     name: '',
     email: '',
     message: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const formRef = useRef<HTMLFormElement>(null);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -47,10 +48,14 @@ const ContactSection: React.FC = () => {
     setIsSubmitting(true);
 
     try {
-      // EmailJS configuration with your credentials
-      const serviceId = 'service_ovarifn';
-      const templateId = 'template_bryuud9';
-      const publicKey = 'beHzhKirsA2ouOaoN';
+      // EmailJS configuration from environment variables
+      const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+      const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+      const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
+
+      if (!serviceId || !templateId || !publicKey) {
+        throw new Error('EmailJS configuration is missing. Please check environment variables.');
+      }
 
       const templateParams = {
         from_name: formData.name,
@@ -119,9 +124,9 @@ const ContactSection: React.FC = () => {
         position="top-right"
         toastOptions={{
           style: {
-            background: '#1a1a1a',
-            color: '#fff',
-            border: '1px solid #374151',
+            background: theme === 'dark' ? '#1a1a1a' : '#ffffff',
+            color: theme === 'dark' ? '#fff' : '#111827',
+            border: theme === 'dark' ? '1px solid #374151' : '1px solid #e5e7eb',
           },
           success: {
             style: {
@@ -136,7 +141,7 @@ const ContactSection: React.FC = () => {
         }}
       />
       
-      <div className="absolute inset-0 bg-gradient-to-b from-black/90 via-black to-black/90 z-0"></div>
+      <div className="absolute inset-0 bg-gradient-to-b from-surface/90 via-surface to-surface/90 z-0"></div>
       
       {/* Animated background elements */}
       <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-cyan-500/10 rounded-full filter blur-3xl animate-pulse"></div>
@@ -154,7 +159,7 @@ const ContactSection: React.FC = () => {
             Get In Touch
           </h2>
           <div className="h-1 w-20 bg-gradient-to-r from-cyan-400 to-purple-600 mx-auto rounded-full"></div>
-          <p className="text-gray-400 mt-6 max-w-2xl mx-auto">
+          <p className="text-foreground-muted mt-6 max-w-2xl mx-auto">
             Have a project in mind or want to collaborate? I'd love to hear from you! 
             Send me a message and I'll get back to you as soon as possible.
           </p>
@@ -164,13 +169,13 @@ const ContactSection: React.FC = () => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
             {/* Contact Info */}
             <div className="space-y-8">
-              <div className="bg-black/40 backdrop-blur-md border border-gray-800 rounded-xl p-8 relative overflow-hidden group hover:border-cyan-500/30 transition-all duration-500">
+              <div className="bg-surface/40 backdrop-blur-md border border-line rounded-xl p-8 relative overflow-hidden group hover:border-cyan-500/30 transition-all duration-500">
                 {/* Background glow effects */}
                 <div className="absolute -right-24 -bottom-24 w-64 h-64 bg-cyan-500/10 rounded-full filter blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
                 <div className="absolute -left-24 -top-24 w-64 h-64 bg-purple-500/10 rounded-full filter blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
                 
                 <div className="relative z-10">
-                  <h3 className="text-2xl font-bold text-white mb-6">Let's Connect</h3>
+                  <h3 className="text-2xl font-bold text-foreground mb-6">Let's Connect</h3>
                   
                   <div className="space-y-6">
                     <div className="flex items-center gap-4">
@@ -178,10 +183,10 @@ const ContactSection: React.FC = () => {
                         <Mail size={24} />
                       </div>
                       <div>
-                        <p className="text-gray-400 text-sm">Email</p>
+                        <p className="text-foreground-muted text-sm">Email</p>
                         <a 
                           href="mailto:tesfamichaelad@gmail.com"
-                          className="text-white hover:text-cyan-400 transition-colors duration-300"
+                          className="text-foreground hover:text-cyan-400 transition-colors duration-300"
                         >
                           tesfamichaelad@gmail.com
                         </a>
@@ -193,8 +198,8 @@ const ContactSection: React.FC = () => {
                         <User size={24} />
                       </div>
                       <div>
-                        <p className="text-gray-400 text-sm">Location</p>
-                        <p className="text-white">Addis Ababa, Ethiopia</p>
+                        <p className="text-foreground-muted text-sm">Location</p>
+                        <p className="text-foreground">Addis Ababa, Ethiopia</p>
                       </div>
                     </div>
                     
@@ -203,14 +208,14 @@ const ContactSection: React.FC = () => {
                         <CheckCircle size={24} />
                       </div>
                       <div>
-                        <p className="text-gray-400 text-sm">Response Time</p>
-                        <p className="text-white">Usually within 24 hours</p>
+                        <p className="text-foreground-muted text-sm">Response Time</p>
+                        <p className="text-foreground">Usually within 24 hours</p>
                       </div>
                     </div>
                   </div>
                   
-                  <div className="mt-8 pt-6 border-t border-gray-800">
-                    <p className="text-gray-400 text-sm italic">
+                  <div className="mt-8 pt-6 border-t border-line">
+                    <p className="text-foreground-muted text-sm italic">
                       "I'm always excited to work on new projects and collaborate with fellow developers!"
                     </p>
                   </div>
@@ -219,22 +224,22 @@ const ContactSection: React.FC = () => {
             </div>
 
             {/* Contact Form */}
-            <div className="bg-black/40 backdrop-blur-md border border-gray-800 rounded-xl p-8 relative overflow-hidden group hover:border-purple-500/30 transition-all duration-500">
+            <div className="bg-surface/40 backdrop-blur-md border border-line rounded-xl p-8 relative overflow-hidden group hover:border-purple-500/30 transition-all duration-500">
               {/* Background glow effects */}
               <div className="absolute -right-24 -bottom-24 w-64 h-64 bg-purple-500/10 rounded-full filter blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
               <div className="absolute -left-24 -top-24 w-64 h-64 bg-cyan-500/10 rounded-full filter blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
               
               <div className="relative z-10">
-                <h3 className="text-2xl font-bold text-white mb-6">Send Message</h3>
+                <h3 className="text-2xl font-bold text-foreground mb-6">Send Message</h3>
                 
-                <form ref={formRef} onSubmit={handleSubmit} className="space-y-6">
+                <form onSubmit={handleSubmit} className="space-y-6">
                   <div>
-                    <label htmlFor="name" className="block text-sm font-medium text-gray-300 mb-2">
+                    <label htmlFor="name" className="block text-sm font-medium text-foreground-sub mb-2">
                       Your Name *
                     </label>
                     <div className="relative">
                       <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                        <User className="h-5 w-5 text-gray-500" />
+                        <User className="h-5 w-5 text-foreground-muted" />
                       </div>
                       <input
                         type="text"
@@ -242,7 +247,7 @@ const ContactSection: React.FC = () => {
                         name="name"
                         value={formData.name}
                         onChange={handleInputChange}
-                        className="w-full pl-10 pr-4 py-3 bg-black/50 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-all duration-300"
+                        className="w-full pl-10 pr-4 py-3 bg-surface/50 border border-line-alt rounded-lg text-foreground placeholder-foreground-muted focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-all duration-300"
                         placeholder="Enter your name"
                         required
                       />
@@ -250,12 +255,12 @@ const ContactSection: React.FC = () => {
                   </div>
                   
                   <div>
-                    <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">
+                    <label htmlFor="email" className="block text-sm font-medium text-foreground-sub mb-2">
                       Your Email *
                     </label>
                     <div className="relative">
                       <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                        <Mail className="h-5 w-5 text-gray-500" />
+                        <Mail className="h-5 w-5 text-foreground-muted" />
                       </div>
                       <input
                         type="email"
@@ -263,7 +268,7 @@ const ContactSection: React.FC = () => {
                         name="email"
                         value={formData.email}
                         onChange={handleInputChange}
-                        className="w-full pl-10 pr-4 py-3 bg-black/50 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-all duration-300"
+                        className="w-full pl-10 pr-4 py-3 bg-surface/50 border border-line-alt rounded-lg text-foreground placeholder-foreground-muted focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-all duration-300"
                         placeholder="Enter your email"
                         required
                       />
@@ -271,12 +276,12 @@ const ContactSection: React.FC = () => {
                   </div>
                   
                   <div>
-                    <label htmlFor="message" className="block text-sm font-medium text-gray-300 mb-2">
+                    <label htmlFor="message" className="block text-sm font-medium text-foreground-sub mb-2">
                       Your Message *
                     </label>
                     <div className="relative">
                       <div className="absolute top-3 left-3 pointer-events-none">
-                        <MessageSquare className="h-5 w-5 text-gray-500" />
+                        <MessageSquare className="h-5 w-5 text-foreground-muted" />
                       </div>
                       <textarea
                         id="message"
@@ -284,7 +289,7 @@ const ContactSection: React.FC = () => {
                         value={formData.message}
                         onChange={handleInputChange}
                         rows={5}
-                        className="w-full pl-10 pr-4 py-3 bg-black/50 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-all duration-300 resize-none"
+                        className="w-full pl-10 pr-4 py-3 bg-surface/50 border border-line-alt rounded-lg text-foreground placeholder-foreground-muted focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-all duration-300 resize-none"
                         placeholder="Tell me about your project or just say hello!"
                         required
                       />
@@ -294,11 +299,11 @@ const ContactSection: React.FC = () => {
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-cyan-500 to-purple-600 text-white font-medium rounded-lg hover:from-cyan-600 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 focus:ring-offset-black transition-all duration-300 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+                    className="w-full flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-cyan-500 to-purple-600 text-white font-medium rounded-lg hover:from-cyan-600 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 focus:ring-offset-surface transition-all duration-300 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
                   >
                     {isSubmitting ? (
                       <>
-                        <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
+                        <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-foreground"></div>
                         <span>Sending...</span>
                       </>
                     ) : (
@@ -310,8 +315,8 @@ const ContactSection: React.FC = () => {
                   </button>
                 </form>
                 
-                <div className="mt-6 pt-6 border-t border-gray-800">
-                  <p className="text-gray-500 text-xs text-center">
+                <div className="mt-6 pt-6 border-t border-line">
+                  <p className="text-foreground-muted text-xs text-center">
                     Your message will be sent directly to my email inbox. I respect your privacy and will never share your information.
                   </p>
                 </div>
