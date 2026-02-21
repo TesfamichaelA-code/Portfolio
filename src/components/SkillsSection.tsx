@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useInView } from '../hooks/useInView';
+import { useTheme } from '../context/ThemeContext';
 
 type SkillCategory = 'languages' | 'frontend' | 'backend' | 'database' | 'mobile';
 
@@ -53,9 +54,15 @@ const categoryColors: Record<SkillCategory, string> = {
   mobile: 'from-green-400 to-cyan-500',
 };
 
+// Logos that are primarily dark/black and need inversion in dark mode
+const darkInvertLogos = new Set(['Next.js']);
+// Logos with dark elements that need a brightness boost in dark mode
+const darkBrightenLogos = new Set(['Go (Gin)', 'MongoDB', 'MySQL']);
+
 const SkillsSection: React.FC = () => {
   const [activeCategory, setActiveCategory] = useState<SkillCategory | 'all'>('all');
   const [ref, isVisible] = useInView({ threshold: 0.1, sectionName: 'skills_section' });
+  const { theme } = useTheme();
 
   const filteredSkills = activeCategory === 'all' 
     ? skills 
@@ -151,7 +158,16 @@ const SkillsSection: React.FC = () => {
                       }}
                     >
                       <div className="group-hover:scale-110 transition-transform duration-300">
-                        <img src={skill.logo} alt={skill.name} className="w-8 h-8" loading="lazy" />
+                        <img
+                          src={skill.logo}
+                          alt={skill.name}
+                          className={`w-8 h-8 ${
+                            darkInvertLogos.has(skill.name) ? 'dark:invert' : ''
+                          } ${
+                            darkBrightenLogos.has(skill.name) ? 'dark:brightness-[1.8]' : ''
+                          }`}
+                          loading="lazy"
+                        />
                       </div>
                       <span className="text-sm text-foreground-sub group-hover:text-foreground transition-colors duration-300">
                         {skill.name}

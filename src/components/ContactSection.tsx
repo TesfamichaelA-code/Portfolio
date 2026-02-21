@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Send, Mail, User, MessageSquare, CheckCircle } from 'lucide-react';
+import { Send, Mail, User, MessageSquare, CheckCircle, Rocket, AlertCircle, XCircle } from 'lucide-react';
 import { useInView } from '../hooks/useInView';
 import { useTheme } from '../context/ThemeContext';
 import emailjs from '@emailjs/browser';
@@ -34,14 +34,18 @@ const ContactSection: React.FC = () => {
     e.preventDefault();
     
     if (!formData.name || !formData.email || !formData.message) {
-      toast.error('Please fill in all fields');
+      toast.error('Please fill in all fields', {
+        icon: <AlertCircle size={20} className="text-red-400" />,
+      });
       return;
     }
 
     // Basic email validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(formData.email)) {
-      toast.error('Please enter a valid email address');
+      toast.error('Please enter a valid email address', {
+        icon: <AlertCircle size={20} className="text-red-400" />,
+      });
       return;
     }
 
@@ -69,7 +73,7 @@ const ContactSection: React.FC = () => {
       
       toast.success('Message sent successfully! I\'ll get back to you soon.', {
         duration: 5000,
-        icon: '🚀',
+        icon: <Rocket size={20} className="text-cyan-400" />,
       });
 
       // Track successful form submission
@@ -98,16 +102,26 @@ const ContactSection: React.FC = () => {
       // More specific error handling
       if (error instanceof Error) {
         if (error.message.includes('Invalid user ID')) {
-          toast.error('EmailJS configuration error: Invalid Public Key. Please check your setup.');
+          toast.error('EmailJS configuration error: Invalid Public Key. Please check your setup.', {
+            icon: <XCircle size={20} className="text-red-400" />,
+          });
         } else if (error.message.includes('Service not found')) {
-          toast.error('EmailJS configuration error: Service ID not found. Please check your setup.');
+          toast.error('EmailJS configuration error: Service ID not found. Please check your setup.', {
+            icon: <XCircle size={20} className="text-red-400" />,
+          });
         } else if (error.message.includes('Template not found')) {
-          toast.error('EmailJS configuration error: Template ID not found. Please check your setup.');
+          toast.error('EmailJS configuration error: Template ID not found. Please check your setup.', {
+            icon: <XCircle size={20} className="text-red-400" />,
+          });
         } else {
-          toast.error('Failed to send message. Please try again or contact me directly at tesfamichaelad@gmail.com');
+          toast.error('Failed to send message. Please try again or contact me directly at tesfamichaelad@gmail.com', {
+            icon: <XCircle size={20} className="text-red-400" />,
+          });
         }
       } else {
-        toast.error('Failed to send message. Please try again or contact me directly.');
+        toast.error('Failed to send message. Please try again or contact me directly.', {
+          icon: <XCircle size={20} className="text-red-400" />,
+        });
       }
     } finally {
       setIsSubmitting(false);
