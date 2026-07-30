@@ -8,7 +8,7 @@ export const site = {
 	location: 'Addis Ababa, Ethiopia',
 	email: 'tesfamichaelad@gmail.com',
 	availability: 'Open to AI, backend & ML engineering positions',
-	url: 'https://tesfamichael.dev',
+	url: 'https://tesfamichaela.me',
 	links: {
 		github: 'https://github.com/TesfamichaelA-code',
 		linkedin: 'https://linkedin.com/in/tesfamichael-abebe-damtew',
