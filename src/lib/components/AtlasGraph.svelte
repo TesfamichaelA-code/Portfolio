@@ -13,6 +13,19 @@
 
 	const base = buildAtlas();
 
+	/**
+	 * The canvas is unreachable by keyboard and invisible to screen readers and
+	 * crawlers, so the same graph is also rendered as a plain nested list below.
+	 * It ships in the SSR markup, which means it doubles as the no-JS fallback.
+	 */
+	const outline = (['project', 'experience', 'note', 'skill', 'domain'] as AtlasGroup[])
+		.map((group) => ({
+			group,
+			label: groupLabels[group],
+			nodes: base.nodes.filter((n) => n.group === group)
+		}))
+		.filter((section) => section.nodes.length > 0);
+
 	const neighbors = new Map<string, Set<string>>();
 	for (const link of base.links) {
 		if (!neighbors.has(link.source)) neighbors.set(link.source, new Set());
@@ -117,7 +130,37 @@
 	let fitTimer: ReturnType<typeof setTimeout> | undefined;
 	function fitSoon() {
 		clearTimeout(fitTimer);
-		fitTimer = setTimeout(() => graph?.zoomToFit(500, 70), 900);
+		fitTimer = setTimeout(() => graph?.zoomToFit(600, 40), 1400);
+	}
+
+	/**
+	 * A d3 force is just a function with an `initialize` hook, so rather than
+	 * take d3-force as a direct dependency for one of them, here it is: a
+	 * spring pulling every node toward the horizontal midline.
+	 */
+	function flattenForce(strength: number) {
+		let nodes: { y: number; vy: number }[] = [];
+		const force = (alpha: number) => {
+			for (const n of nodes) n.vy -= n.y * strength * alpha;
+		};
+		force.initialize = (n: { y: number; vy: number }[]) => (nodes = n);
+		return force;
+	}
+
+	/**
+	 * Left alone the simulation settles into a circle, and zoomToFit scales
+	 * that circle to the *shorter* axis — so on a 3:1 canvas the graph used
+	 * ~30% of the width, colliding labels in the middle while the sides sat
+	 * empty. Compressing only the vertical axis turns the circle into an
+	 * ellipse shaped like the canvas. Only y is touched: adding a matching x
+	 * force would pull the whole graph inward and just shrink it instead.
+	 */
+	function applySpread() {
+		if (!graph || !container.clientHeight) return;
+		const aspect = container.clientWidth / container.clientHeight;
+		// no flattening on a portrait/square canvas; ramp up as it gets wider
+		const strength = Math.min(Math.max(aspect - 1, 0), 2) * 0.035;
+		graph.d3Force('flatten', strength > 0 ? flattenForce(strength) : null);
 	}
 
 	onMount(() => {
@@ -224,7 +267,7 @@
 					// final fit once the simulation settles, so no node ends up off-canvas
 					if (!settled) {
 						settled = true;
-						graph.zoomToFit(500, 70);
+						graph.zoomToFit(600, 40);
 					}
 				});
 
@@ -242,13 +285,23 @@
 				graph.warmupTicks(150).cooldownTicks(0);
 			}
 
+			let lastAspect = 0;
 			const resize = () => {
 				graph.width(container.clientWidth).height(container.clientHeight);
+				const aspect = container.clientWidth / Math.max(container.clientHeight, 1);
+				// only re-shape when the canvas actually changed proportion, so a
+				// scrollbar appearing doesn't reheat the whole simulation
+				if (Math.abs(aspect - lastAspect) > 0.05) {
+					lastAspect = aspect;
+					applySpread();
+					settled = false;
+					graph.d3ReheatSimulation?.();
+				}
+				fitSoon();
 			};
 			const ro = new ResizeObserver(resize);
 			ro.observe(container);
 			resize();
-			fitSoon();
 
 			cleanup = () => {
 				themeObserver.disconnect();
@@ -272,6 +325,7 @@
 				type="button"
 				class="filter-btn"
 				class:active={filter === f.value}
+				aria-pressed={filter === f.value}
 				onclick={() => applyFilter(f.value)}
 			>
 				{#if f.group}<span class="dot" style={`background:var(--atlas-${f.group})`} aria-hidden="true"></span>{/if}
@@ -280,7 +334,31 @@
 		{/each}
 	</div>
 
-	<div class="canvas" bind:this={container} aria-label="Interactive mind map of projects, experience, notes, and skills"></div>
+	<div
+		class="canvas"
+		bind:this={container}
+		role="img"
+		aria-label="Force-directed map of projects, experience, notes and skills. The same content is listed below."
+	></div>
+
+	<nav class="sr-only" aria-label="Atlas contents">
+		<h2>Everything in the atlas</h2>
+		{#each outline as section}
+			<h3>{section.label}</h3>
+			<ul>
+				{#each section.nodes as node}
+					<li>
+						{#if node.href}
+							<a href={node.href}>{node.label}</a>
+						{:else}
+							{node.label}
+						{/if}
+						{#if node.sub}<span> — {node.sub}</span>{/if}
+					</li>
+				{/each}
+			</ul>
+		{/each}
+	</nav>
 
 	{#if selected}
 		<aside class="detail panel" aria-live="polite">
@@ -314,7 +392,7 @@
 	}
 
 	.canvas {
-		height: clamp(520px, calc(100svh - 220px), 860px);
+		height: clamp(560px, calc(100svh - 150px), 880px);
 		overflow: hidden;
 		cursor: grab;
 	}

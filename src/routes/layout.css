@@ -3,9 +3,6 @@
 @import '@fontsource/instrument-serif/400-italic.css';
 @import '@fontsource-variable/inter';
 @import '@fontsource-variable/jetbrains-mono';
-@import '@fortawesome/fontawesome-free/css/fontawesome.css';
-@import '@fortawesome/fontawesome-free/css/brands.css';
-@import '@fortawesome/fontawesome-free/css/solid.css';
 
 /* ------------------------------------------------------------------
    TESFA.EPP — design tokens
@@ -22,14 +19,14 @@
 
 	--ink: #ece5d8;
 	--ink-dim: #b3aa99;
-	--muted: #837b6d;
+	--muted: #8b8375;
 
 	--line: rgba(236, 229, 216, 0.09);
 	--line-strong: rgba(236, 229, 216, 0.2);
 
 	--amber: #ffb454;
 	--amber-hot: #ffcf87;
-	--amber-dim: rgba(255, 180, 84, 0.55);
+	--amber-dim: rgba(255, 180, 84, 0.65);
 	--mint: #99ffe4;
 	--rose: #ff9592;
 	--on-accent: #1a1000;
@@ -94,7 +91,7 @@
 
 	--ink: #251f18;
 	--ink-dim: #5e554a;
-	--muted: #756a5c;
+	--muted: #6e6455;
 
 	--line: rgba(37, 31, 24, 0.12);
 	--line-strong: rgba(37, 31, 24, 0.24);
@@ -401,6 +398,34 @@ button:focus-visible {
 .panel.hoverable:hover {
 	border-color: var(--accent-line);
 	background: var(--panel-hover-bg);
+}
+
+/* ---------------------------------------------------------------
+   visually hidden — present for screen readers, keyboards and crawlers
+---------------------------------------------------------------- */
+.sr-only {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	margin: -1px;
+	padding: 0;
+	border: 0;
+	overflow: hidden;
+	clip: rect(0 0 0 0);
+	clip-path: inset(50%);
+	white-space: nowrap;
+}
+
+/* ...but let a keyboard user see where focus actually is */
+.sr-only:focus-within {
+	position: static;
+	width: auto;
+	height: auto;
+	margin: 0;
+	overflow: visible;
+	clip: auto;
+	clip-path: none;
+	white-space: normal;
 }
 
 /* ---------------------------------------------------------------

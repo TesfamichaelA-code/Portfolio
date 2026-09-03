@@ -17,9 +17,6 @@ importers:
       '@fontsource/instrument-serif':
         specifier: ^5.2.8
         version: 5.2.8
-      '@fortawesome/fontawesome-free':
-        specifier: ^7.3.0
-        version: 7.3.0
       '@lucide/svelte':
         specifier: ^1.17.0
         version: 1.24.0(svelte@5.56.5)
@@ -236,10 +233,6 @@ packages:
 
   '@fontsource/instrument-serif@5.2.8':
     resolution: {integrity: sha512-s+bkz+syj2rO00Rmq9g0P+PwuLig33DR1xDR8pTWmovH1pUjwnncrFk++q9mmOex8fUQ7oW80gPpPDaw7V1MMw==}
-
-  '@fortawesome/fontawesome-free@7.3.0':
-    resolution: {integrity: sha512-Yw4Qa43P6e4Xwh0TwEUkHQNRJInWaqIBo73VJmns3j2AIlZPAvUcR4yGIxCPqPRCgyJ5KIVIalF/I1GxhZ/Kgw==}
-    engines: {node: '>=6'}
 
   '@isaacs/fs-minipass@4.0.1':
     resolution: {integrity: sha512-wgm9Ehl2jpeqP3zw/7mo3kRHFp5MEDhqAdwy1fTGkHAwnkGOVsgpvQhL8B5n1qlb01jV3n/bI0ZfZp5lWA1k4w==}
@@ -1371,8 +1364,6 @@ snapshots:
   '@fontsource-variable/jetbrains-mono@5.2.8': {}
 
   '@fontsource/instrument-serif@5.2.8': {}
-
-  '@fortawesome/fontawesome-free@7.3.0': {}
 
   '@isaacs/fs-minipass@4.0.1':
     dependencies:

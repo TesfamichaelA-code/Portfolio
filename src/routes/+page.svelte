@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { ArrowRight, ArrowUpRight } from '@lucide/svelte';
 	import CompileHero from '$lib/components/CompileHero.svelte';
+	import Seo from '$lib/components/Seo.svelte';
 	import ProjectCard from '$lib/components/ProjectCard.svelte';
 	import RecognitionStrip from '$lib/components/RecognitionStrip.svelte';
 	import { reveal } from '$lib/actions/reveal';
@@ -36,13 +37,10 @@
 	const latestPosts = posts.slice(0, 3);
 </script>
 
-<svelte:head>
-	<title>Tesfamichael Abebe — software engineer · backend, AI & compilers</title>
-	<meta
-		name="description"
-		content="Tesfamichael Abebe builds backend systems, AI pipelines, and built his own programming language. Software engineering @ AAU, ML engineering and research @ Synheart."
-	/>
-</svelte:head>
+<Seo
+	title="Tesfamichael Abebe — software engineer · backend, AI & compilers"
+	description="Tesfamichael Abebe builds backend systems, AI pipelines, and built his own programming language. Software engineering @ AAU, ML engineering and research @ Synheart."
+/>
 
 <section class="recognition-band" aria-label="Latest recognition">
 	<div class="shell">
@@ -110,8 +108,8 @@
 			<h2 id="history-title" class="display">Call <span class="accent">stack</span>.</h2>
 		</div>
 		<p class="lede">
-			Five organizations in two years — payments, AI research, open source, HR platforms. Most
-			recent frame on top.
+			{experience.length} organizations in two years — payments, AI research, open source, HR
+			platforms. Most recent frame on top.
 		</p>
 	</div>
 

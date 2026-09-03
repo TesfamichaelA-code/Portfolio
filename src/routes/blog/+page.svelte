@@ -2,15 +2,13 @@
 	import { ArrowRight, Layers } from '@lucide/svelte';
 	import { posts, standalonePosts, seriesList, formatDate } from '$lib/posts';
 	import { reveal } from '$lib/actions/reveal';
+	import Seo from '$lib/components/Seo.svelte';
 </script>
 
-<svelte:head>
-	<title>Notes — Tesfamichael Abebe</title>
-	<meta
-		name="description"
-		content="Field notes and running logs on compilers, payment systems, retrieval pipelines, and AI research — written from real builds."
-	/>
-</svelte:head>
+<Seo
+	title="Notes"
+	description="Field notes and running logs on compilers, payment systems, retrieval pipelines, and AI research — written from real builds."
+/>
 
 <div class="shell route">
 	<header class="section-head split">
