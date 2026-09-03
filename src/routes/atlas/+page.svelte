@@ -1,14 +1,12 @@
 <script lang="ts">
 	import AtlasGraph from '$lib/components/AtlasGraph.svelte';
+	import Seo from '$lib/components/Seo.svelte';
 </script>
 
-<svelte:head>
-	<title>Atlas — Tesfamichael Abebe</title>
-	<meta
-		name="description"
-		content="An interactive mind map of Tesfamichael's work: projects, experience, skills, and notes as one connected graph."
-	/>
-</svelte:head>
+<Seo
+	title="Atlas"
+	description="An interactive mind map of Tesfamichael's work: projects, experience, skills, and notes as one connected graph."
+/>
 
 <div class="shell atlas-head">
 	<span class="ir-comment">; ===== atlas · symbol table, visualized =================</span>

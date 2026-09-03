@@ -2,6 +2,7 @@
 	import { onMount } from 'svelte';
 	import { ArrowRight } from '@lucide/svelte';
 	import { site } from '$lib/data/site';
+	import { experience } from '$lib/data/experience';
 
 	const command = 'epicc tesfamichael.epp --emit=portfolio -O3';
 
@@ -16,11 +17,16 @@
 		{ value: '1', label: 'language built' },
 		{ value: '300ms', label: 'payment paths' },
 		{ value: '0.93', label: 'retrieval precision' },
-		{ value: '5', label: 'teams shipped with' }
+		{ value: String(experience.length), label: 'teams shipped with' }
 	];
 
 	// SSR and no-JS render the finished state; the animation only
 	// winds back and replays after hydration when motion is allowed.
+	//
+	// The terminal is decorative (aria-hidden) and nothing outside it waits on
+	// the replay: the name, role, pitch and CTAs stay painted from the first
+	// frame. They used to be gated on `booted`, which hid the whole hero for
+	// ~3.8s on a first visit — after it had already painted server-side.
 	let animating = $state(false);
 	let typedChars = $state(command.length);
 	let linesShown = $state(buildLines.length);
@@ -107,7 +113,7 @@
 			</div>
 		</div>
 
-		<div class="output" class:booted>
+		<div class="output">
 			<p class="mono-label preface">; program output</p>
 			<h1 id="hero-title" class="hero-name">
 				<span class="n1">Tesfamichael</span>
@@ -296,15 +302,6 @@
 		display: grid;
 		gap: 1.15rem;
 		justify-items: start;
-	}
-
-	.output > * {
-		transition: opacity 0.5s ease, transform 0.5s ease;
-	}
-
-	.output:not(.booted) > * {
-		opacity: 0;
-		transform: translateY(10px);
 	}
 
 	.preface {

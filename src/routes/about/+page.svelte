@@ -4,6 +4,7 @@
 	import { education, skills, certifications, community, recognitions } from '$lib/data/profile';
 	import { site } from '$lib/data/site';
 	import { reveal } from '$lib/actions/reveal';
+	import Seo from '$lib/components/Seo.svelte';
 
 	const skillGroups = [
 		{ label: 'languages', items: skills.languages },
@@ -16,13 +17,10 @@
 	];
 </script>
 
-<svelte:head>
-	<title>Profile — Tesfamichael Abebe</title>
-	<meta
-		name="description"
-		content="Tesfamichael Abebe — software engineering student at Addis Ababa University, ML engineer and researcher at Synheart, builder of EPIC++."
-	/>
-</svelte:head>
+<Seo
+	title="Profile"
+	description="Tesfamichael Abebe — software engineering student at Addis Ababa University, ML engineer and researcher at Synheart, builder of EPIC++."
+/>
 
 <div class="shell route">
 	<!-- header -->

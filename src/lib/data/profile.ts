@@ -1,3 +1,5 @@
+import { site } from '$lib/data/site';
+
 export const education = [
 	{
 		institution: 'Addis Ababa University',
@@ -85,11 +87,8 @@ export const community = {
 	intro:
 		'I joined A2SV (Africa to Silicon Valley) this year and solve problems on LeetCode and Codeforces consistently.',
 	items: [
-		{
-			label: 'A2SV solutions repo',
-			href: 'https://github.com/TesfamichaelA-code/A2SV_Solved_Questions'
-		},
-		{ label: 'LeetCode', href: 'https://leetcode.com/u/Tesfamichael_Abebe' },
-		{ label: 'Codeforces', href: 'https://codeforces.com/profile/tesfamichael.abebe' }
+		{ label: 'A2SV solutions repo', href: site.links.a2svRepo },
+		{ label: 'LeetCode', href: site.links.leetcode },
+		{ label: 'Codeforces', href: site.links.codeforces }
 	]
 };

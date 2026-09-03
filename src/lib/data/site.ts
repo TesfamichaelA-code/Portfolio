@@ -1,7 +1,5 @@
 export const site = {
 	name: 'Tesfamichael Abebe',
-	shortName: 'Tesfamichael',
-	firstName: 'Tesfa',
 	mark: 'ተ', // Ge'ez initial of Tesfamichael
 	role: 'Software Engineer — Backend, AI & Compilers',
 	tagline: 'I build backend systems, AI pipelines, and — once — my own programming language.',

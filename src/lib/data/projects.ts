@@ -21,8 +21,8 @@ export interface Project {
 	stack: string[];
 	metrics?: { value: string; label: string }[];
 	links?: { label: string; href: string }[];
-	/** live screenshot shown on the work page */
-	preview?: { src: string; alt: string };
+	/** live screenshot shown on the work page; dimensions reserve layout space */
+	preview?: { src: string; alt: string; width: number; height: number };
 	/** repo exists but isn't public yet */
 	repoPrivate?: boolean;
 	featured?: boolean;
@@ -93,7 +93,7 @@ export const projects: Project[] = [
 		],
 		stack: ['FastAPI', 'PostgreSQL', 'Redis', 'Docker', 'Nginx', 'Azure'],
 		links: [{ label: 'up-monitor.live', href: 'https://up-monitor.live' }],
-		preview: { src: '/previews/uptime-monitor.webp', alt: 'Up Monitor status dashboard login' },
+		preview: { src: '/previews/uptime-monitor.webp', alt: 'Up Monitor status dashboard login', width: 1200, height: 750 },
 		featured: true,
 		artifact: 'GET /status → 200 OK (cached, 12ms)'
 	},
@@ -121,7 +121,7 @@ export const projects: Project[] = [
 			{ label: 'chapa.events', href: 'https://chapa.events' },
 			{ label: 'chapa.link/donations', href: 'https://chapa.link/donations' }
 		],
-		preview: { src: '/previews/chapa-events.webp', alt: 'chapa.events — upcoming events and ticketing' },
+		preview: { src: '/previews/chapa-events.webp', alt: 'chapa.events — upcoming events and ticketing', width: 1200, height: 750 },
 		featured: true,
 		artifact: 'checkout → gateway → 300ms ✓'
 	},
@@ -180,7 +180,7 @@ export const projects: Project[] = [
 		links: [
 			{ label: 'live site', href: 'https://knowledge-playlist-ten.vercel.app' }
 		],
-		preview: { src: '/previews/knowledge-playlist.webp', alt: 'Knowledge Playlist — structured learning paths' },
+		preview: { src: '/previews/knowledge-playlist.webp', alt: 'Knowledge Playlist — structured learning paths', width: 1200, height: 750 },
 		artifact: 'playlist.next() → keep going'
 	},
 	{

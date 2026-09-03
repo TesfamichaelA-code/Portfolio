@@ -1,0 +1,61 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; }
+  html, body { width: 1200px; height: 630px; overflow: hidden; }
+  body {
+    background:
+      radial-gradient(900px 500px at 78% -12%, rgba(255,176,84,0.10), transparent 62%),
+      radial-gradient(rgba(236,229,216,0.045) 1px, transparent 1px),
+      #0d0c0a;
+    background-size: auto, 26px 26px;
+    color: #ece5d8;
+    font-family: 'JetBrains Mono', monospace;
+    position: relative;
+  }
+  .grid {
+    position: absolute; inset: 0;
+    background:
+      linear-gradient(rgba(236,229,216,0.028) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(236,229,216,0.028) 1px, transparent 1px);
+    background-size: 64px 64px;
+    -webkit-mask-image: radial-gradient(760px 520px at 26% 22%, black, transparent 76%);
+  }
+  .wrap { position: relative; height: 100%; display: flex; align-items: center; gap: 56px; padding: 0 76px; }
+  .copy { flex: 1; min-width: 0; }
+  .marker { color: rgba(255,180,84,0.65); font-size: 17px; letter-spacing: 0.08em; margin-bottom: 26px; }
+  h1 { font-family: 'Instrument Serif', Georgia, serif; font-weight: 400; font-size: 92px; line-height: 0.96; letter-spacing: 0.005em; }
+  h1 .amber { color: #ffb454; font-style: italic; display: block; }
+  .role { margin-top: 26px; font-size: 20px; font-weight: 500; letter-spacing: 0.02em; color: #ece5d8; }
+  .lede { margin-top: 16px; font-family: 'JetBrains Mono', monospace; font-size: 17px; line-height: 1.65; color: #b3aa99; max-width: 44ch; }
+  .stats { margin-top: 34px; display: flex; border: 1px solid rgba(236,229,216,0.09); border-radius: 10px; overflow: hidden; width: fit-content; }
+  .stats div { padding: 14px 24px; border-right: 1px solid rgba(236,229,216,0.09); }
+  .stats div:last-child { border-right: 0; }
+  .stats dt { font-family: 'Instrument Serif', Georgia, serif; font-size: 30px; line-height: 1.05; color: #ece5d8; }
+  .stats dd { margin-top: 3px; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: #8b8375; }
+  .portrait { width: 340px; flex: 0 0 340px; position: relative; }
+  .portrait::before { content:''; position:absolute; inset:-12% -18%; background: radial-gradient(50% 50% at 50% 45%, rgba(255,176,84,0.25), transparent 70%); }
+  .portrait img { position: relative; width: 100%; display: block; filter: saturate(0.94) contrast(1.03); -webkit-mask-image: linear-gradient(black 82%, transparent 99%); }
+  .url { position: absolute; left: 76px; bottom: 40px; font-size: 15px; letter-spacing: 0.08em; color: rgba(255,180,84,0.65); }
+</style></head>
+<body>
+  <div class="grid"></div>
+  <div class="wrap">
+    <div class="copy">
+      <div class="marker">; ===== tesfamichael.epp ====================</div>
+      <h1>Tesfamichael<span class="amber">Abebe</span></h1>
+      <div class="role">software engineer — backend · applied AI · compilers</div>
+      <div class="lede">Backend systems, AI pipelines, and once — to understand the whole machine — my own programming language.</div>
+      <dl class="stats">
+        <div><dt>1</dt><dd>language built</dd></div>
+        <div><dt>300ms</dt><dd>payment paths</dd></div>
+        <div><dt>0.93</dt><dd>retrieval precision</dd></div>
+      </dl>
+    </div>
+    <div class="portrait"><img src="../../static/tesfamichael.webp" alt=""></div>
+  </div>
+  <div class="url">tesfamichaela.me</div>
+</body></html>

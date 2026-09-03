@@ -1,16 +1,14 @@
 <script lang="ts">
 	import { ArrowUpRight, Lock } from '@lucide/svelte';
 	import { projects } from '$lib/data/projects';
+	import Seo from '$lib/components/Seo.svelte';
 	import { reveal } from '$lib/actions/reveal';
 </script>
 
-<svelte:head>
-	<title>Work — Tesfamichael Abebe</title>
-	<meta
-		name="description"
-		content="Build artifacts: a compiler for a custom language, RAG pipelines, production payment platforms, uptime monitoring, and mobile products."
-	/>
-</svelte:head>
+<Seo
+	title="Work"
+	description="Build artifacts: a compiler for a custom language, RAG pipelines, production payment platforms, uptime monitoring, and mobile products."
+/>
 
 <div class="shell route">
 	<header class="section-head split">
@@ -99,11 +97,23 @@
 								rel="noreferrer"
 								aria-label={`Open ${project.title} live`}
 							>
-								<img src={project.preview.src} alt={project.preview.alt} loading="lazy" />
+								<img
+									src={project.preview.src}
+									alt={project.preview.alt}
+									width={project.preview.width}
+									height={project.preview.height}
+									loading="lazy"
+								/>
 							</a>
 						{:else}
 							<div class="pf-shot">
-								<img src={project.preview.src} alt={project.preview.alt} loading="lazy" />
+								<img
+									src={project.preview.src}
+									alt={project.preview.alt}
+									width={project.preview.width}
+									height={project.preview.height}
+									loading="lazy"
+								/>
 							</div>
 						{/if}
 					</figure>

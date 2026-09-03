@@ -2,6 +2,7 @@
 	import { ArrowUpRight, Copy, Check } from '@lucide/svelte';
 	import { site } from '$lib/data/site';
 	import BrandIcon, { type BrandName } from '$lib/components/BrandIcon.svelte';
+	import Seo from '$lib/components/Seo.svelte';
 
 	let copied = $state(false);
 
@@ -33,13 +34,10 @@
 	];
 </script>
 
-<svelte:head>
-	<title>Contact — Tesfamichael Abebe</title>
-	<meta
-		name="description"
-		content="Get in touch with Tesfamichael Abebe — email, GitHub, LinkedIn, LeetCode, Codeforces."
-	/>
-</svelte:head>
+<Seo
+	title="Contact"
+	description="Get in touch with Tesfamichael Abebe — email, GitHub, LinkedIn, LeetCode, Codeforces."
+/>
 
 <div class="shell route contact">
 	<header class="section-head">

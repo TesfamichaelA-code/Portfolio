@@ -2,6 +2,7 @@ import { projects } from '$lib/data/projects';
 import { experience } from '$lib/data/experience';
 import { posts } from '$lib/posts';
 import { site } from '$lib/data/site';
+import { dev } from '$app/environment';
 
 export type AtlasGroup = 'self' | 'domain' | 'project' | 'experience' | 'note' | 'skill';
 
@@ -19,15 +20,6 @@ export interface AtlasLink {
 	source: string;
 	target: string;
 }
-
-export const groupColors: Record<AtlasGroup, string> = {
-	self: '#ffb454',
-	domain: '#ece5d8',
-	project: '#ffcf87',
-	experience: '#99ffe4',
-	note: '#ff9592',
-	skill: '#8a8274'
-};
 
 export const groupLabels: Record<AtlasGroup, string> = {
 	self: 'me',
@@ -167,5 +159,24 @@ export function buildAtlas(): { nodes: AtlasNode[]; links: AtlasLink[] } {
 		links.push({ source: `domain:${domain}`, target: `skill:${skill}` });
 	}
 
+	if (dev) warnOnDanglingLinks(nodes, links);
+
 	return { nodes, links };
+}
+
+/**
+ * Domains exist only because some project claims them, so dropping the last
+ * project in a domain silently orphans every skill and edge pointing at it.
+ * The graph renders anyway — it just quietly loses nodes — so shout in dev.
+ */
+function warnOnDanglingLinks(nodes: AtlasNode[], links: AtlasLink[]) {
+	const ids = new Set(nodes.map((n) => n.id));
+	const dangling = links.filter((l) => !ids.has(l.source) || !ids.has(l.target));
+	if (dangling.length) {
+		console.warn(
+			`[atlas] ${dangling.length} link(s) point at a node that does not exist — ` +
+				'check skillMap / experienceEdges against the project domains:',
+			dangling.map((l) => `${l.source} → ${l.target}`)
+		);
+	}
 }

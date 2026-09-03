@@ -2,6 +2,7 @@
 	import type { Component } from 'svelte';
 	import { ArrowLeft, ArrowRight, Layers } from '@lucide/svelte';
 	import { posts, formatDate, seriesContext } from '$lib/posts';
+	import Seo from '$lib/components/Seo.svelte';
 
 	let { data } = $props();
 
@@ -17,10 +18,13 @@
 	const nextLabel = $derived(series ? 'next in series' : 'newer');
 </script>
 
-<svelte:head>
-	<title>{data.meta.title} — Tesfamichael Abebe</title>
-	<meta name="description" content={String(data.meta.summary ?? '')} />
-</svelte:head>
+<Seo
+	title={String(data.meta.title)}
+	description={String(data.meta.summary ?? '')}
+	type="article"
+	published={String(data.meta.date ?? '')}
+	tags={(data.meta.tags as string[]) ?? []}
+/>
 
 <article class="shell route post">
 	<header class="post-head">
