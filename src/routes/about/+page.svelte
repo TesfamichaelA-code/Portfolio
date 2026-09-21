@@ -38,11 +38,12 @@
 				foundation in full-stack development, backend AI engineering, and applied machine learning.
 			</p>
 			<p>
-				I'm pursuing a BSc in Software Engineering at Addis Ababa University while completing a
-				diploma in Applied Generative AI at EPIC Institute of Technology — which is where I built
-				<a href="/projects#epic-pp">EPIC++</a>, my own statically-typed language and compiler, still
-				my proudest work. Right now I work as an ML engineer and researcher at Synheart,
-				modeling human states from kinematics.
+				I'm pursuing a BSc in Software Engineering at Addis Ababa University, and I recently
+				completed a diploma in Applied Generative AI at EPIC Institute of Technology — which is where
+				I built <a href="/projects#epic-pp">EPIC++</a>, my own statically-typed language and compiler,
+				still my proudest work. Right now I work as an ML engineer and researcher at Synheart,
+				modeling human states from kinematics, and write Rust for an open-source consensus protocol
+				at iCog Labs.
 			</p>
 			<p>
 				The pattern across everything I build: understand the machine one layer deeper than the job
@@ -115,6 +116,11 @@
 							<li>{detail}</li>
 						{/each}
 					</ul>
+					{#if school.certificateUrl}
+						<a class="cert-view edu-cert" href={school.certificateUrl} target="_blank" rel="noreferrer">
+							view certificate <ArrowUpRight size={13} aria-hidden="true" />
+						</a>
+					{/if}
 				</article>
 			{/each}
 		</div>
@@ -455,6 +461,10 @@
 		color: var(--ink-dim);
 		font-size: 0.92rem;
 		line-height: 1.65;
+	}
+
+	.edu-cert:hover {
+		color: var(--amber-hot);
 	}
 
 	.edu-details li::before {

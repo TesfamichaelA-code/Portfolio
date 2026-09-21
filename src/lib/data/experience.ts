@@ -27,11 +27,14 @@ export const experience: Experience[] = [
 		slug: 'icog',
 		company: 'iCog Labs',
 		role: 'AI Engineer Intern',
-		period: 'Jan — May 2026',
+		period: 'Jun 2026 — present',
 		summary:
-			'Contributed across two teams at Ethiopia’s pioneering AI lab.',
+			'Writing Rust for Cordial Miners, an open-source consensus protocol, at Ethiopia’s pioneering AI lab.',
 		points: [
-			'Consistent open-source contributions to the Cordial Miners repository',
+			'Merged 9 of 9 pull requests — about 5,500 lines of Rust; 4th most active of 12 contributors',
+			'Fixed a bug that left nodes unable to agree after a network split, and wrongly flagged honest nodes as cheating',
+			'Kept the proof of equivocation at the moment a block is rejected, so it survives for later slashing',
+			'Built the adversarial simulation suite the protocol is now tested against',
 			'Contributed to the OpenPsi codebase in the MeTTa programming language'
 		]
 	},

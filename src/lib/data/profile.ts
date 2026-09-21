@@ -18,6 +18,8 @@ export const education = [
 		institution: 'EPIC Institute of Technology',
 		credential: 'Diploma, Applied Generative AI',
 		period: 'Sep 2025 — Jun 2026',
+		/** certificate of completion, No. EIOT260005, issued 1 Sep 2026 */
+		certificateUrl: 'https://drive.google.com/file/d/1FXvW-fdYn-UmDj4LiCfDC7tpNn865f6P/view',
 		details: [
 			'Semester 1: algorithms & data structures, data science (Kaggle competitions), advanced programming languages — built the EPIC++ compiler, mathematics & statistics',
 			'Semester 2: systems architecture & distributed protocols in Rust, networks & cloud engineering (AWS, Docker), applied generative AI — prompt engineering, agent orchestration, LangChain, LangGraph'
